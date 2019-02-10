@@ -1,5 +1,5 @@
 ---
-title: "Bike Vendor Analysis"
+title: "GapMinder Data Analysis"
 author: "Radhika Bade"
 date: "2/3/2019"
 output: html_document
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Analyze the life expectancy of various countries over the years by using factors like population and income.
 
-## Impoting all the necessary libraries
+## Importing all the necessary libraries
 ```{r, echo=TRUE}
 library(readr)
 ```
@@ -22,5 +22,20 @@ library(readr)
 
 ```{r, echo=TRUE}
 gapminder <- read_csv("~/Desktop/RExercises/gapminder.csv")
+View(gapminder)
 ```
 
+## Exploring gapminder data
+Our data consists of the following variables:
+```{r, echo=TRUE}
+names(gapminder)
+```
+Let us have a look at the our data.
+```{r, echo=TRUE}
+summary(gapminder)
+```
+Let us have a close look at the contents of our variables.
+```{r, echo=TRUE}
+str(gapminder)
+```
+Our data has 
