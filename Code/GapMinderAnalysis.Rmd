@@ -16,6 +16,7 @@ Analyze the life expectancy of various countries over the years by using factors
 ## Importing all the necessary libraries
 ```{r, echo=TRUE}
 library(readr)
+library(ggplot2)
 ```
 
 ## Reading gapminder data
