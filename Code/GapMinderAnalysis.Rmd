@@ -16,7 +16,7 @@ Analyze the life expectancy of various countries over the years by using factors
 ## Importing all the necessary libraries
 ```{r, echo=TRUE}
 library(readr)
-## library(ggplot2)
+library(ggplot2)
 ```
 
 ## Reading gapminder data
@@ -27,16 +27,16 @@ gapminder <- read_csv("~/Desktop/RExercises/gapminder.csv")
 ```
 
 ## Exploring gapminder data
-## Our data consists of the following variables:
+Our data consists of the following variables:
 ```{r, echo=TRUE}
-## names(gapminder)
+names(gapminder)
 ```
-## Let us have a look at the our data.
+Let us have a look at the our data.
 ```{r, echo=TRUE}
-## summary(gapminder)
+summary(gapminder)
 ```
-## Let us have a close look at the contents of our variables.
+Let us have a close look at the contents of our variables.
 ```{r, echo=TRUE}
-## str(gapminder)
+str(gapminder)
 ```
 ## Our data has 
