@@ -1,0 +1,33 @@
+---
+title: "K-means Cluster Analysist"
+author: "Radhika Bade"
+date: "2/17/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## calling the following libraries
+
+```{r echo=FALSE}
+library(tidyverse)  
+library(cluster)    
+library(factoextra) 
+```
+
+## Data preparation
+
+```{r echo=FALSE}
+df <- USArrests
+df <- na.omit(df)
+df <- scale(df)
+head(df)
+```
+## Visualizing data
+
+```{r echo=FALSE}
+distance <- get_dist(df)
+fviz_dist(distance, gradient = list(low = "#00AFBB", mid = "black", high = "#FC4E07"))
+```
