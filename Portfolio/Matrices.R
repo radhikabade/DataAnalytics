@@ -1,6 +1,6 @@
-x <- 1:5
-y <- 6:10
-z <- 11:15
+x <- 1:6
+y <- 7:12
+z <- 13:15
 
 # Create a matrix where x, y and z are columns
 cbind(x, y, z)
@@ -34,8 +34,8 @@ matrix(data = 1:10,
 # Create a dataframe of survey data
 
 survey <- data.frame("index" = c(1, 2, 3, 4, 5),
-                     "sex" = c("m", "m", "m", "f", "f"),
-                     "age" = c(99, 46, 23, 54, 23))
+                     "sex" = c("f", "f", "m", "m", "f"),
+                     "age" = c(24, 89, 45, 54, 90))
 survey
 
 # Show me the structure of the survey dataframe
@@ -43,8 +43,8 @@ str(survey)
 
 # Create a dataframe of survey data WITHOUT factors
 survey <- data.frame("index" = c(1, 2, 3, 4, 5),
-                     "sex" = c("m", "m", "m", "f", "f"),
-                     "age" = c(99, 46, 23, 54, 23),
+                     "sex" = c("f", "f", "m", "m", "f"),
+                     "age" = c(24, 89, 45, 54, 90),
                      stringsAsFactors = FALSE)
 
 # Print the result (it looks the same as before)
