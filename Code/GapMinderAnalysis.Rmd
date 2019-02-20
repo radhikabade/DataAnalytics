@@ -13,30 +13,116 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Analyze the life expectancy of various countries over the years by using factors like population and income.
 
+My focus has been on analysis life expectancy across various regions. I have tried to answer questions like what is the mean, density of life expectancy across the various regions through these years. How has it changed over the years and what it says.
+
+Apart from that I have also focused on analyzing the United States data, trying to analyze how the population, income, life expectany has changes over the course of years.
+
 ## Importing all the necessary libraries
 ```{r, echo=TRUE}
 library(readr)
 library(ggplot2)
+library(plotly)
+library(ggthemes)
 ```
 
 ## Reading gapminder data
 
 ```{r, echo=TRUE}
 gapminder <- read_csv("~/Desktop/RExercises/gapminder.csv")
-## View(gapminder)
+# View(gapminder)
 ```
 
 ## Exploring gapminder data
-Our data consists of the following variables:
+Our data consists of the following variables:Country, Year, Life, Population, Income and Region
 ```{r, echo=TRUE}
 names(gapminder)
 ```
-Let us have a look at the our data.
+Let us have a look at the our data. 
 ```{r, echo=TRUE}
 summary(gapminder)
 ```
-Let us have a close look at the contents of our variables.
+Let us have a close look at the structure of our data. You will observe that country, region are factor type variables whereas Year, life, population and income are int type variables.
+Also, let us clean our data to remove NA values.
 ```{r, echo=TRUE}
 str(gapminder)
 ```
-## Our data has 
+Lets look at the mean life expentancy across the six different regions.
+For the below plot we can infer that the life expectancy across various regions lie roughly between 50 to 70 years. Sub Saharan African region had the least life expectancy and Europe & Central asian had the highest life expectancy.
+```{r, echo=TRUE}
+mean(gapminder$life)
+aggregate(life ~ region, gapminder, mean)
+ggplot(na.omit(gapminder), aes(x = region, y = life)) +
+  geom_boxplot(outlier.colour = "red") + 
+  ggtitle("Mean of life expectancy across different regions") +
+  xlab("Regions") + ylab("Life Expectancy")
+```
+I wanted to explore a little more about how the density of life expectancy changed over the years, by comparing years 1800 to 2015. There has been a huge difference since 1800's. Life expectancy rate has definitely increase over the years and there has been a change of life expectancy rates across various regions as well.
+```{r, echo=TRUE}
+na.omit(gapminder) %>%
+  filter(Year==1800) %>%
+  ggplot(aes(x = life, fill = region)) +
+  geom_density(alpha = 0.2) + 
+  ggtitle("Density of life expectancy across different regions in the year 1800") +
+  ylab("Density") + xlab("Life Expectancy")
+```
+
+```{r, echo=TRUE}
+na.omit(gapminder) %>%
+  filter(Year==2015) %>%
+  ggplot(aes(x = life, fill = region)) +
+  geom_density(alpha = 0.2) + 
+  ggtitle("Density of life expectancy across different regions in the year 2015") +
+  ylab("Density") + xlab("Life Expectancy")
+```
+
+```{r, echo=TRUE}
+ gapminderData <-   na.omit(gapminder) %>%   filter(Year == 2015) %>%   group_by(region)
+
+ggplot(data= gapminderData, mapping = aes(y=region, x=income))+   geom_point()+   geom_jitter()+   coord_cartesian(ylim=c(0, 7))
+
+```
+
+```{r, echo=TRUE}
+p <- ggplot(na.omit(gapminder), aes(income, life)) + 
+  scale_x_log10() +
+  aes(col=region) + geom_point() + geom_smooth(lwd=2, se=FALSE) + 
+  ggtitle("Life expectancy vs Income by Region") +
+ xlab("Income") + ylab("Life Expectancy (years)") +
+theme_gray() +
+  theme_bw() + 
+  theme_classic() 
+p + theme_excel()
+p + theme_excel() + scale_colour_excel()
+p + theme_gdocs() + scale_colour_gdocs()
+p + theme_stata() + scale_colour_stata()
+```
+
+I wanted to check if the population affected the income earned across the various regions but from the below graph we can say that there has been not much of an affect of both the factors on each other.
+```{r, echo=TRUE}
+unique(gapminder$Year)
+x <- na.omit(gapminder) %>%
+  filter(Year==2015) %>%
+  ggplot( aes(income, population, size = 0.1, color=region)) + 
+  geom_point() +
+  scale_x_log10() +
+  theme_bw() + 
+  ggtitle("Population comparison to Income across different regions") +
+  xlab("Income") + ylab("Population")
+ 
+ggplotly(x)
+```
+Lastly, I wanted to compare the how population, income and life expectancy varied across America over all these years. As observed by the graphs below, the life expectancy across america has increased tremendously over the years, so has the population and income. As and how the population seems to be growing the income seems to increase as well.
+
+```{r, echo=TRUE}
+USA <- (gapminder) %>%
+  filter(Country=="United States") 
+plot(USA$life, USA$Year, type = "s", xlab = "Life Expectancy", ylab = "Year", main ="Life expectancy in America across the years")
+```
+
+```{r, echo=TRUE}
+plot(USA$population, USA$Year, las=1, xlab = "Population", ylab = "Year", main ="Population in America across the years", bty="n", cex=0.5, cex.axis=0.6, pch=19)
+```
+
+```{r, echo=TRUE}
+plot(USA$income, USA$Year, type = "l", xlab = "Income", ylab = "Year", main ="Incomein America across the years")
+```
